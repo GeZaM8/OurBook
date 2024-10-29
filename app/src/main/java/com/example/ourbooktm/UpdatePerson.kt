@@ -6,6 +6,8 @@ import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -103,6 +105,21 @@ class UpdatePerson : AppCompatActivity() {
         }
 
         binding.btnSave.setOnClickListener {
+            val fields = listOf(
+                binding.etName,
+                binding.etNickname,
+                binding.etEmail,
+                binding.etAlamat,
+                binding.etTglLahir,
+                binding.etTelp
+            )
+
+            val empty: Array<Boolean> = Array(fields.size + 1) {true}
+            for (i in 0 until (empty.size - 1)) { empty[i] = isEmptyEt(fields[i]) }
+            empty[empty.size - 1] = isEmptyIv(binding.foto)
+
+            if (empty.any { it }) return@setOnClickListener
+
             val about = AlertDialog.Builder(this)
             about.setTitle("Update Person")
             about.setMessage("Are You Sure to Submit?")
@@ -127,6 +144,22 @@ class UpdatePerson : AppCompatActivity() {
         }
     }
 
+    private fun isEmptyEt(et: EditText): Boolean {
+        if (et.text.isEmpty()) {
+            et.setError("Input can't be empty")
+            return true
+        }
+        return false
+    }
+
+    private fun isEmptyIv(iv: ImageView): Boolean {
+        if (iv.drawable == null) {
+            iv.setBackgroundResource(R.drawable.baseline_error_border)
+            return true
+        }
+        return false
+    }
+
     private fun requestStoragePermission() {
         requestPermissions(storagePermissions, STORAGE_PERMISSION)
     }
@@ -137,7 +170,12 @@ class UpdatePerson : AppCompatActivity() {
     }
 
     private fun pickFromGallery() {
-        cropImageLauncher.launch(CropImageContractOptions(null, CropImageOptions()))
+        val cropImageOptions = CropImageOptions().apply {
+            aspectRatioX = 1
+            aspectRatioY = 1
+            fixAspectRatio = true
+        }
+        cropImageLauncher.launch(CropImageContractOptions(null, cropImageOptions))
     }
 
     private fun requstCameraPersmission() {

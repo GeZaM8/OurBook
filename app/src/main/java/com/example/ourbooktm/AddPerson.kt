@@ -3,8 +3,11 @@ package com.example.ourbooktm
 import android.Manifest
 import android.app.DatePickerDialog
 import android.content.pm.PackageManager
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -62,7 +65,38 @@ class AddPerson : AppCompatActivity() {
             }
         }
 
+        binding.etTglLahir.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = DatePickerDialog(
+                this,
+                { _, selectedYear, selectedMonth, selectedDay ->
+                    binding.etTglLahir.setText("$selectedDay/${selectedMonth + 1}/$selectedYear")
+                },
+                year, month, day
+            )
+            datePickerDialog.show()
+        }
+
         binding.btnSave.setOnClickListener {
+            val fields = listOf(
+                binding.etName,
+                binding.etNickname,
+                binding.etEmail,
+                binding.etAlamat,
+                binding.etTglLahir,
+                binding.etTelp
+            )
+
+            val empty: Array<Boolean> = Array(fields.size + 1) {true}
+            for (i in 0 until (empty.size - 1)) { empty[i] = isEmptyEt(fields[i]) }
+            empty[empty.size - 1] = isEmptyIv(binding.ivPhoto)
+
+            if (empty.any { it }) return@setOnClickListener
+
             val about = AlertDialog.Builder(this)
             about.setTitle("Add Person")
             about.setMessage("Are You Sure to Submit? (Data Can be Change)")
@@ -85,22 +119,22 @@ class AddPerson : AppCompatActivity() {
             }
             about.show()
         }
+    }
 
-        binding.etTglLahir.setOnClickListener {
-            val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH)
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-            val datePickerDialog = DatePickerDialog(
-                this,
-                { _, selectedYear, selectedMonth, selectedDay ->
-                    binding.etTglLahir.setText("$selectedDay/${selectedMonth + 1}/$selectedYear")
-                },
-                year, month, day
-            )
-            datePickerDialog.show()
+    private fun isEmptyEt(et: EditText): Boolean {
+        if (et.text.isEmpty()) {
+            et.setError("Input can't be empty")
+            return true
         }
+        return false
+    }
+
+    private fun isEmptyIv(iv: ImageView): Boolean {
+        if (iv.drawable == null) {
+            iv.setBackgroundResource(R.drawable.baseline_error_border)
+            return true
+        }
+        return false
     }
 
     private fun requestStoragePermission() {
@@ -113,7 +147,12 @@ class AddPerson : AppCompatActivity() {
     }
 
     private fun pickFromGallery() {
-        cropImageLauncher.launch(CropImageContractOptions(null, CropImageOptions()))
+        val cropImageOptions = CropImageOptions().apply {
+            aspectRatioX = 1
+            aspectRatioY = 1
+            fixAspectRatio = true
+        }
+        cropImageLauncher.launch(CropImageContractOptions(null, cropImageOptions))
     }
 
     private fun requstCameraPersmission() {

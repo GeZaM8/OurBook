@@ -10,6 +10,7 @@ import android.provider.ContactsContract.Data
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ourbooktm.database.DatabaseHelperOurBook
@@ -50,10 +51,19 @@ class PersonsAdapter(private var person: List<Person>): RecyclerView.Adapter<Per
         }
 
         holder.binding.btnDelete.setOnClickListener {
-            val db = DatabaseHelperOurBook(holder.itemView.context)
-            db.deleteUser(person.id)
-            refreshData(db.getAllUser())
-            Toast.makeText(holder.itemView.context, "Person Deleted", Toast.LENGTH_SHORT).show()
+            val about = AlertDialog.Builder(holder.itemView.context)
+            about.setTitle("Add Person")
+            about.setMessage("Are You Sure to Submit? (Data Can be Change)")
+            about.setNegativeButton("No") { dialog, _ ->
+                dialog.cancel()
+            }
+            about.setPositiveButton("Yes") { dialog, _ ->
+                val db = DatabaseHelperOurBook(holder.itemView.context)
+                db.deleteUser(person.id)
+                refreshData(db.getAllUser())
+                Toast.makeText(holder.itemView.context, "Person Deleted", Toast.LENGTH_SHORT).show()
+            }
+            about.show()
         }
 
         holder.binding.texttelp.setOnClickListener {

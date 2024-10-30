@@ -28,14 +28,14 @@ class DatabaseHelperOurBook(context: Context?) : SQLiteOpenHelper(context, DATAB
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createTableQuery = "CREATE TABLE $TABLE_NAME (" +
-                "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "$COLUMN_NAME VARCHAR(50), " +
-                "$COLUMN_NICKNAME VARCHAR(10), " +
-                "$COLUMN_PHOTO BLOB, " +
-                "$COLUMN_EMAIL VARCHAR(100), " +
+                "$COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "$COLUMN_NAME VARCHAR(50) NOT NULL, " +
+                "$COLUMN_NICKNAME VARCHAR(10) NOT NULL, " +
+                "$COLUMN_PHOTO BLOB NOT NULL, " +
+                "$COLUMN_EMAIL VARCHAR(100) NOT NULL, " +
                 "$COLUMN_ADDRESS TEXT, " +
-                "$COLUMN_BIRTH DATE, " +
-                "$COLUMN_NUMBER VARCHAR(14)" +
+                "$COLUMN_BIRTH DATE NOT NULL, " +
+                "$COLUMN_NUMBER VARCHAR(14) NOT NULL" +
                 ")"
         db?.execSQL(createTableQuery)
     }

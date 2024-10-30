@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
     tools:context=".AddPerson">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -79,7 +80,7 @@
                 android:id="@+id/etName"
                 style="@style/input"
                 android:drawableStart="@drawable/baseline_person_24"
-                android:hint="Enter the Name"
+                android:hint="Name"
                 android:inputType="text" />
 
         </androidx.cardview.widget.CardView>
@@ -96,7 +97,7 @@
                 android:id="@+id/etNickname"
                 style="@style/input"
                 android:drawableStart="@drawable/baseline_person_outline_24"
-                android:hint="Enter the Nickname"
+                android:hint="Nickname"
                 android:inputType="text" />
 
         </androidx.cardview.widget.CardView>
@@ -113,7 +114,7 @@
                 android:id="@+id/etEmail"
                 style="@style/input"
                 android:drawableStart="@drawable/baseline_alternate_email_24"
-                android:hint="Enter the Email"
+                android:hint="example@email.com"
                 android:inputType="textEmailAddress" />
 
         </androidx.cardview.widget.CardView>
@@ -131,7 +132,7 @@
                 style="@style/input"
                 android:drawableStart="@drawable/baseline_location_on_24"
                 android:gravity="top"
-                android:hint="Enter the Address"
+                android:hint="Address"
                 android:inputType="textMultiLine" />
 
         </androidx.cardview.widget.CardView>
@@ -148,7 +149,7 @@
                 android:id="@+id/etTglLahir"
                 style="@style/input"
                 android:drawableStart="@drawable/baseline_date_range_24"
-                android:hint="Enter the Birth"
+                android:hint="Birth"
                 android:inputType="date"
                 android:focusable="false"
                 android:clickable="true" />
@@ -167,8 +168,8 @@
                 android:id="@+id/etTelp"
                 style="@style/input"
                 android:drawableStart="@drawable/baseline_local_phone_24"
-                android:hint="Enter the Number Phone"
-                android:inputType="text" />
+                android:hint="Number Phone"
+                android:inputType="phone" />
 
         </androidx.cardview.widget.CardView>
 

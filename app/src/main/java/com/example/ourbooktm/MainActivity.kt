@@ -1,7 +1,10 @@
 package com.example.ourbooktm
 
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ourbooktm.database.DatabaseHelperOurBook
@@ -38,4 +41,6 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         personsAdapter.refreshData(db.getAllUser())
     }
+
+
 }

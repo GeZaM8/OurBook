@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
     tools:context=".AboutActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -144,7 +145,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="https://github.com/GeZaM8/OurBook"
-        android:textColor="#0000FF"
+        android:textColor="#4949FF"
+        android:textStyle=""
         app:layout_constraintBottom_toTopOf="@id/lblVersion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -154,7 +156,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Version: 1.0.0"
+        android:text="Version: 2.0.0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

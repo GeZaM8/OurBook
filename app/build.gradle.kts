@@ -41,6 +41,7 @@ android {
 dependencies {
     api("com.vanniktech:android-image-cropper:4.3.3")
     implementation("com.squareup.picasso:picasso:2.8")
+    implementation("androidx.core:core-splashscreen:1.0.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

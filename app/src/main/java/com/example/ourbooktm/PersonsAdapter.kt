@@ -52,8 +52,8 @@ class PersonsAdapter(private var person: List<Person>): RecyclerView.Adapter<Per
 
         holder.binding.btnDelete.setOnClickListener {
             val about = AlertDialog.Builder(holder.itemView.context)
-            about.setTitle("Add Person")
-            about.setMessage("Are You Sure to Submit? (Data Can be Change)")
+            about.setTitle("Delete Person")
+            about.setMessage("Are You Sure to Delete It? (Data Can't be Return)")
             about.setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
             }
@@ -66,17 +66,26 @@ class PersonsAdapter(private var person: List<Person>): RecyclerView.Adapter<Per
             about.show()
         }
 
-        holder.binding.texttelp.setOnClickListener {
-            val phoneNumber = holder.binding.texttelp.text.toString()
-            val intent = Intent(Intent.ACTION_CALL)
-            intent.data = Uri.parse("tel:$phoneNumber")
-
-            if (ActivityCompat.checkSelfPermission(holder.itemView.context, android.Manifest.permission.CALL_PHONE) == (PackageManager.PERMISSION_GRANTED)) {
-                holder.itemView.context.startActivity(intent)
-            } else {
-                Toast.makeText(holder.itemView.context, "Permission untuk panggilan telepon diperlukan", Toast.LENGTH_SHORT).show()
-                ActivityCompat.requestPermissions(holder.itemView.context as Activity, arrayOf(android.Manifest.permission.CALL_PHONE), 1)
+        holder.binding.call.setOnClickListener {
+            val about = AlertDialog.Builder(holder.itemView.context)
+            about.setTitle("Call Person")
+            about.setMessage("Are You Sure Want To Call This Person?")
+            about.setNegativeButton("No") { dialog, _ ->
+                dialog.cancel()
             }
+            about.setPositiveButton("Yes") { dialog, _ ->
+                val phoneNumber = holder.binding.texttelp.text.toString()
+                val intent = Intent(Intent.ACTION_CALL)
+                intent.data = Uri.parse("tel:$phoneNumber")
+
+                if (ActivityCompat.checkSelfPermission(holder.itemView.context, android.Manifest.permission.CALL_PHONE) == (PackageManager.PERMISSION_GRANTED)) {
+                        holder.itemView.context.startActivity(intent)
+                } else {
+                    Toast.makeText(holder.itemView.context, "Permission untuk panggilan telepon diperlukan", Toast.LENGTH_SHORT).show()
+                    ActivityCompat.requestPermissions(holder.itemView.context as Activity, arrayOf(android.Manifest.permission.CALL_PHONE), 1)
+                }
+            }
+            about.show()
         }
     }
 

@@ -109,7 +109,6 @@ class UpdatePerson : AppCompatActivity() {
                 binding.etName,
                 binding.etNickname,
                 binding.etEmail,
-                binding.etAlamat,
                 binding.etTglLahir,
                 binding.etTelp
             )
@@ -120,6 +119,9 @@ class UpdatePerson : AppCompatActivity() {
 
             if (empty.any { it }) return@setOnClickListener
 
+            val email = binding.etEmail.text.toString().trim()
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) return@setOnClickListener binding.etEmail.setError("Wrong Email Format")
+
             val about = AlertDialog.Builder(this)
             about.setTitle("Update Person")
             about.setMessage("Are You Sure to Submit?")
@@ -127,12 +129,11 @@ class UpdatePerson : AppCompatActivity() {
                 dialog.cancel()
             }
             about.setPositiveButton("Yes") { dialog, _ ->
-                val name = binding.etName.text.toString()
-                val nickname = binding.etNickname.text.toString()
-                val email = binding.etEmail.text.toString()
-                val address = binding.etAlamat.text.toString()
-                val birth = binding.etTglLahir.text.toString()
-                val number = binding.etTelp.text.toString()
+                val name = binding.etName.text.toString().trim()
+                val nickname = binding.etNickname.text.toString().trim()
+                val address = binding.etAlamat.text.toString().trim()
+                val birth = binding.etTglLahir.text.toString().trim()
+                val number = binding.etTelp.text.toString().trim()
 
                 val updatePerson = Person(personId, name, nickname, email, address, birth, number, db.ImageViewToByte(binding.foto))
 

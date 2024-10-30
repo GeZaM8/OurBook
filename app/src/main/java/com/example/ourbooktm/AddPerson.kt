@@ -86,7 +86,6 @@ class AddPerson : AppCompatActivity() {
                 binding.etName,
                 binding.etNickname,
                 binding.etEmail,
-                binding.etAlamat,
                 binding.etTglLahir,
                 binding.etTelp
             )
@@ -97,6 +96,9 @@ class AddPerson : AppCompatActivity() {
 
             if (empty.any { it }) return@setOnClickListener
 
+            val email = binding.etEmail.text.toString().trim()
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) return@setOnClickListener binding.etEmail.setError("Wrong Email Format")
+
             val about = AlertDialog.Builder(this)
             about.setTitle("Add Person")
             about.setMessage("Are You Sure to Submit? (Data Can be Change)")
@@ -104,12 +106,11 @@ class AddPerson : AppCompatActivity() {
                 dialog.cancel()
             }
             about.setPositiveButton("Yes") { dialog, _ ->
-                val name = binding.etName.text.toString()
-                val nickname = binding.etNickname.text.toString()
-                val email = binding.etEmail.text.toString()
-                val address = binding.etAlamat.text.toString()
-                val birth = binding.etTglLahir.text.toString()
-                val number = binding.etTelp.text.toString()
+                val name = binding.etName.text.toString().trim()
+                val nickname = binding.etNickname.text.toString().trim()
+                val address = binding.etAlamat.text.toString().trim()
+                val birth = binding.etTglLahir.text.toString().trim()
+                val number = binding.etTelp.text.toString().trim()
 
                 val person = Person(0, name, nickname, email, address, birth, number, db.ImageViewToByte(binding.ivPhoto))
                 db.insertUser(person)
